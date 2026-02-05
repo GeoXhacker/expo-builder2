@@ -2,23 +2,19 @@ version: '3.8'
 
 services:
   android-build:
-    # Use the image name we built earlier
     image: expo-android-builder
-    # OR build it from the current directory if you keep Dockerfile here
-    # build: .
     volumes:
-      # 1. Mount the project code
-      - ./:/app
-      # 2. Mount the SHARED cache (Critical for speed across projects)
-      # This maps the named volume to the container's cache location
+      # Mount the entire Monorepo Root to /monorepo
+      - ./:/monorepo
+      # Mount the SHARED cache
       - gradle_cache_shared:/opt/gradle
+    working_dir: /monorepo/apps/client-ui
     environment:
       # Optional: Pass token if you have it in your host env
       - EXPO_TOKEN=IrR81E6iHp4oY7XyMeh2ZusmZcbmarhwOxJtU-bI
     # Default command to run when using `docker-compose run`
     command: bash -c "npm install && eas build --platform android --local"
 
-# Define the external volume
 volumes:
   gradle_cache_shared:
     external: true
