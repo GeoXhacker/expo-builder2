@@ -20,8 +20,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
     ANDROID_PLATFORM_VERSION="android-35" \
     ANDROID_NDK_VERSION="27.1.12297006" \
     # React Native build variables
-    # Increased heap to 12GB since VPS has 16GB RAM.
-    GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs=\"-Xmx12g -XX:MaxMetaspaceSize=1g\""
+    # Increased heap to 10GB since VPS has 16GB RAM.
+    GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs=\"-Xmx10g -XX:MaxMetaspaceSize=1g\""
 
 # Update PATH to include Android tools and Node
 ENV PATH="${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin:${ANDROID_HOME}/platform-tools"
