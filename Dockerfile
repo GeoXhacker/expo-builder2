@@ -50,7 +50,7 @@ RUN curl -fsSL "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-l
     | tar -xJ -C /usr/local --strip-components=1
 
 # Enable Corepack to get pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN npm install -g pnpm@8.15.2
 
 # ==============================================================================
 # 4. Install Android SDK Command Line Tools
