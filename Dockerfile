@@ -20,8 +20,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
     ANDROID_PLATFORM_VERSION="android-35" \
     ANDROID_NDK_VERSION="27.1.12297006" \
     # React Native build variables
-    # Increased heap to 10GB since VPS has 16GB RAM.
-    GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs=\"-Xmx10g -XX:MaxMetaspaceSize=1g\""
+    # Increased heap to 12GB since VPS has 16GB RAM.
+    GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs=\"-Xmx12g -XX:MaxMetaspaceSize=1g\""
 
 # Update PATH to include Android tools and Node
 ENV PATH="${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin:${ANDROID_HOME}/platform-tools"
@@ -48,6 +48,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Since we are using Ubuntu 24.04 base, we pull the specific Node binary
 RUN curl -fsSL "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.xz" \
     | tar -xJ -C /usr/local --strip-components=1
+
+# Enable Corepack to get pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
 
 # ==============================================================================
 # 4. Install Android SDK Command Line Tools
@@ -86,6 +89,6 @@ RUN mkdir -p /opt/gradle
 # ==============================================================================
 # 7. Final Setup
 # ==============================================================================
-WORKDIR /app
+WORKDIR /monorepo
 
 CMD ["/bin/bash"]
